@@ -1,6 +1,8 @@
-import { useEffect } from 'react';
-import Header from './components/Header/Header';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+
+import Header from './components/Header/Header';
+import Table from './components/Table/Table';
 
 import { fetchUsers } from './store/Users/actions';
 
@@ -11,7 +13,12 @@ const App = () => {
     dispatch(fetchUsers(1));
   }, [dispatch]);
 
-  return <Header />;
+  return (
+    <>
+      <Header />
+      <Table />
+    </>
+  );
 };
 
 export default App;
