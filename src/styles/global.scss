@@ -1,7 +1,13 @@
+$header-height: 60px;
+
 *,
 *::after,
 *::before {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  padding: $header-height 1rem 1rem 1rem;
 }
