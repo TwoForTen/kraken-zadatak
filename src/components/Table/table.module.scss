@@ -1,0 +1,38 @@
+table {
+  width: 100%;
+  overflow: scroll;
+
+  tr {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    width: auto;
+    grid-gap: 0.5rem;
+  }
+  thead {
+    tr {
+      justify-items: start;
+
+      th {
+        padding: 0 0.75rem;
+        font-size: 0.9rem;
+        color: rgba(0, 0, 0, 0.3);
+      }
+    }
+  }
+  tbody {
+    tr {
+      border-bottom: 1px solid #ededed;
+
+      td {
+        padding: 1rem 0.75rem;
+        color: #555;
+        font-size: 0.9rem;
+      }
+    }
+
+    tr:hover {
+      background-color: #ededed;
+      cursor: pointer;
+    }
+  }
+}

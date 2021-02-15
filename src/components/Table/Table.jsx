@@ -1,34 +1,34 @@
 import React from 'react';
 import { useTable } from 'react-table';
+import { useSelector } from 'react-redux';
+import './table.module.scss';
 
 const Table = () => {
+  const { users } = useSelector((state) => state.users);
+
   const data = React.useMemo(
-    () => [
-      {
-        col1: 'Hello',
-        col2: 'World',
-      },
-      {
-        col1: 'react-table',
-        col2: 'rocks',
-      },
-      {
-        col1: 'whatever',
-        col2: 'you want',
-      },
-    ],
-    []
+    () =>
+      users.map((user) => ({
+        firstName: user.name.first,
+        lastName: user.name.last,
+        email: user.email,
+      })),
+    [users]
   );
 
   const columns = React.useMemo(
     () => [
       {
-        Header: 'Column 1',
-        accessor: 'col1', // accessor is the "key" in the data
+        Header: 'First Name',
+        accessor: 'firstName',
       },
       {
-        Header: 'Column 2',
-        accessor: 'col2',
+        Header: 'Last Name',
+        accessor: 'lastName',
+      },
+      {
+        Header: 'Email',
+        accessor: 'email',
       },
     ],
     []
@@ -43,20 +43,12 @@ const Table = () => {
   } = useTable({ columns, data });
 
   return (
-    <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
+    <table {...getTableProps()}>
       <thead>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (
-              <th
-                {...column.getHeaderProps()}
-                style={{
-                  color: 'black',
-                  fontWeight: 'bold',
-                }}
-              >
-                {column.render('Header')}
-              </th>
+              <th {...column.getHeaderProps()}>{column.render('Header')}</th>
             ))}
           </tr>
         ))}
@@ -67,17 +59,7 @@ const Table = () => {
           return (
             <tr {...row.getRowProps()}>
               {row.cells.map((cell) => {
-                return (
-                  <td
-                    {...cell.getCellProps()}
-                    style={{
-                      padding: '10px',
-                      border: 'solid 1px gray',
-                    }}
-                  >
-                    {cell.render('Cell')}
-                  </td>
-                );
+                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
               })}
             </tr>
           );
