@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './modal.module.scss';
 
@@ -8,6 +8,7 @@ const Modal = () => {
   const dispatch = useDispatch();
 
   const { content } = useSelector((state) => state.modal);
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -21,14 +22,35 @@ const Modal = () => {
     <div className={styles.backdrop} onClick={() => dispatch(closeModal())}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <div className={styles.img_container}>
-          <img src="https://picsum.photos/1920/1080" alt="profile_img" />
+          <img
+            onLoad={() => setImgLoaded(true)}
+            style={{ display: imgLoaded ? 'block' : 'none' }}
+            src={content.picture}
+            alt="profile_img"
+          />
+          {!imgLoaded && <div className={styles.img_placeholder} />}
         </div>
         <div className={styles.spacer}>
           <h2>{`${content.firstName} ${content.lastName}`}</h2>
         </div>
         <div className={styles.spacer}>
-          <small>Title</small>
-          <span>The Main Content</span>
+          <small>Email</small>
+          <span>{content.email}</span>
+        </div>
+        <div className={styles.spacer}>
+          <small>Country</small>
+          <span>{content.country}</span>
+        </div>
+        <div className={styles.spacer}>
+          <small>City</small>
+          <span>{content.city}</span>
+        </div>
+        <div className={styles.spacer}>
+          <small>Street</small>
+          <span>{content.street}</span>
+        </div>
+        <div className={styles.button_container}>
+          <button onClick={() => dispatch(closeModal())}>CLOSE</button>
         </div>
       </div>
     </div>

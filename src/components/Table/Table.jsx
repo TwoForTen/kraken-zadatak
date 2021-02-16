@@ -16,6 +16,10 @@ const Table = () => {
         firstName: user.name.first,
         lastName: user.name.last,
         email: user.email,
+        picture: user.picture.large,
+        street: user.location.street.name,
+        city: user.location.city,
+        country: user.location.country,
       })),
     [users]
   );
