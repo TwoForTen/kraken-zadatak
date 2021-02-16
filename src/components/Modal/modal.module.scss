@@ -1,0 +1,45 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba($color: #000000, $alpha: 0.75);
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .modal {
+    max-width: 400px;
+    width: 80vw;
+    height: 60vh;
+    background-color: #fff;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    position: relative;
+
+    .img_container {
+      width: 100%;
+      height: auto;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .spacer {
+      margin: 0.75rem 0;
+
+      small {
+        color: #555;
+      }
+
+      span {
+        display: block;
+      }
+    }
+  }
+}
