@@ -1,12 +1,16 @@
-import React from 'react';
+import { useMemo } from 'react';
 import { useTable } from 'react-table';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import './table.module.scss';
 
+import { openModal } from '../../store/Modal/actions';
+
 const Table = () => {
+  const dispatch = useDispatch();
+
   const { users } = useSelector((state) => state.users);
 
-  const data = React.useMemo(
+  const data = useMemo(
     () =>
       users.map((user) => ({
         firstName: user.name.first,
@@ -16,7 +20,7 @@ const Table = () => {
     [users]
   );
 
-  const columns = React.useMemo(
+  const columns = useMemo(
     () => [
       {
         Header: 'First Name',
@@ -57,7 +61,10 @@ const Table = () => {
         {rows.map((row) => {
           prepareRow(row);
           return (
-            <tr {...row.getRowProps()}>
+            <tr
+              {...row.getRowProps()}
+              onClick={() => dispatch(openModal(row.original))}
+            >
               {row.cells.map((cell) => {
                 return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
               })}
