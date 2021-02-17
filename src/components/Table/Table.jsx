@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from 'react';
-import { useTable, usePagination } from 'react-table';
+import { useTable, useSortBy } from 'react-table';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './table.module.scss';
 
@@ -51,7 +51,7 @@ const Table = () => {
     headerGroups,
     prepareRow,
     rows,
-  } = useTable({ columns, data }, usePagination);
+  } = useTable({ columns, data }, useSortBy);
 
   useEffect(() => {
     dispatch(fetchUsers(page, results));
@@ -59,34 +59,50 @@ const Table = () => {
 
   return (
     <>
-      <table {...getTableProps()}>
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+      <div className={styles.root}>
+        <div className={styles.tableWrap}>
+          <table {...getTableProps()}>
+            <thead>
+              {headerGroups.map((headerGroup) => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column) => (
+                    <th
+                      {...column.getHeaderProps(column.getSortByToggleProps(), {
+                        className: column.collapse ? 'collapse' : '',
+                      })}
+                    >
+                      {column.render('Header')}
+                    </th>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr
-                {...row.getRowProps()}
-                onClick={() => dispatch(openModal(row.original))}
-              >
-                {row.cells.map((cell) => {
-                  return (
-                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr
+                    {...row.getRowProps()}
+                    onClick={() => dispatch(openModal(row.original))}
+                  >
+                    {row.cells.map((cell) => {
+                      return (
+                        <td
+                          {...cell.getCellProps({
+                            className: cell.column.collapse ? 'collapse' : '',
+                          })}
+                        >
+                          {cell.render('Cell')}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
       <div className={styles.pagination}>
         <button onClick={() => setPage(1)} disabled={page <= 1}>
           {'<<'}
