@@ -54,6 +54,7 @@ const Table = () => {
     nextPage,
     previousPage,
     setPageSize,
+    pageCount,
     state: { pageIndex, pageSize },
   } = useTable({ columns, data }, usePagination);
 
@@ -97,6 +98,9 @@ const Table = () => {
         <span>Page {pageIndex + 1}</span>
         <button onClick={() => nextPage()} disabled={!canNextPage}>
           {'>'}
+        </button>
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {'>>'}
         </button>
         <select
           value={pageSize}
