@@ -88,12 +88,12 @@ const Table = () => {
         </tbody>
       </table>
       <div className={styles.pagination}>
-        <button onClick={() => setPage(1)} disabled={page === 0}>
+        <button onClick={() => setPage(1)} disabled={page <= 1}>
           {'<<'}
         </button>
         <button
           onClick={() => setPage((prev) => prev - 1)}
-          disabled={page === 0}
+          disabled={page <= 1}
         >
           {'<'}
         </button>
