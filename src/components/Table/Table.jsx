@@ -1,14 +1,17 @@
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { useTable, usePagination } from 'react-table';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './table.module.scss';
 
+import { fetchUsers } from '../../store/Users/actions';
 import { openModal } from '../../store/Modal/actions';
 
 const Table = () => {
   const dispatch = useDispatch();
 
   const { users } = useSelector((state) => state.users);
+  const [page, setPage] = useState(1);
+  const [results, setResults] = useState(10);
 
   const data = useMemo(
     () =>
@@ -47,16 +50,12 @@ const Table = () => {
     getTableBodyProps,
     headerGroups,
     prepareRow,
-    page,
-    canPreviousPage,
-    canNextPage,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
-    pageCount,
-    state: { pageIndex, pageSize },
+    rows,
   } = useTable({ columns, data }, usePagination);
+
+  useEffect(() => {
+    dispatch(fetchUsers(page, results));
+  }, [page, results, dispatch]);
 
   return (
     <>
@@ -71,7 +70,7 @@ const Table = () => {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {page.map((row) => {
+          {rows.map((row) => {
             prepareRow(row);
             return (
               <tr
@@ -89,23 +88,21 @@ const Table = () => {
         </tbody>
       </table>
       <div className={styles.pagination}>
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+        <button onClick={() => setPage(1)} disabled={page === 0}>
           {'<<'}
         </button>
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+        <button
+          onClick={() => setPage((prev) => prev - 1)}
+          disabled={page === 0}
+        >
           {'<'}
         </button>
-        <span>Page {pageIndex + 1}</span>
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {'>'}
-        </button>
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {'>>'}
-        </button>
+        <span>Page {page}</span>
+        <button onClick={() => setPage((prev) => prev + 1)}>{'>'}</button>
         <select
-          value={pageSize}
+          value={results}
           onChange={(e) => {
-            setPageSize(Number(e.target.value));
+            setResults(Number(e.target.value));
           }}
         >
           {[10, 20, 30, 40, 50].map((pageSize) => (

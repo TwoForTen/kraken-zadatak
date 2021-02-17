@@ -14,13 +14,14 @@ const setLoading = () => {
   };
 };
 
-export const fetchUsers = (page) => {
+export const fetchUsers = (page, results) => {
   return (dispatch) => {
     dispatch(setLoading());
     axios
       .get('/', {
         params: {
           page,
+          results,
         },
       })
       .then(({ data }) => dispatch(storeUsers(data.results)))
