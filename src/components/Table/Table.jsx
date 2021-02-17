@@ -1,49 +1,18 @@
-import { useMemo, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useTable, useSortBy } from 'react-table';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styles from './table.module.scss';
 
 import { fetchUsers } from '../../store/Users/actions';
 import { openModal } from '../../store/Modal/actions';
+import useTableData from '../../hooks/useTableData';
 
 const Table = () => {
   const dispatch = useDispatch();
+  const { columns, data } = useTableData();
 
-  const { users } = useSelector((state) => state.users);
   const [page, setPage] = useState(1);
   const [results, setResults] = useState(10);
-
-  const data = useMemo(
-    () =>
-      users.map((user) => ({
-        firstName: user.name.first,
-        lastName: user.name.last,
-        email: user.email,
-        picture: user.picture.large,
-        street: user.location.street.name,
-        city: user.location.city,
-        country: user.location.country,
-      })),
-    [users]
-  );
-
-  const columns = useMemo(
-    () => [
-      {
-        Header: 'First Name',
-        accessor: 'firstName',
-      },
-      {
-        Header: 'Last Name',
-        accessor: 'lastName',
-      },
-      {
-        Header: 'Email',
-        accessor: 'email',
-      },
-    ],
-    []
-  );
 
   const {
     getTableProps,
