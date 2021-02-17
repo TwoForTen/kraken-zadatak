@@ -72,6 +72,13 @@ const Table = () => {
                       })}
                     >
                       {column.render('Header')}
+                      <span>
+                        {column.isSorted
+                          ? column.isSortedDesc
+                            ? ' 🔽'
+                            : ' 🔼'
+                          : ''}
+                      </span>
                     </th>
                   ))}
                 </tr>
