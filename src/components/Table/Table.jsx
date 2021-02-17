@@ -7,6 +7,9 @@ import { fetchUsers } from '../../store/Users/actions';
 import { openModal } from '../../store/Modal/actions';
 import useTableData from '../../hooks/useTableData';
 
+import up from '../../assets/up.svg';
+import down from '../../assets/down.svg';
+
 const Table = () => {
   const dispatch = useDispatch();
   const { columns, data } = useTableData();
@@ -43,11 +46,15 @@ const Table = () => {
                     >
                       {column.render('Header')}
                       <span>
-                        {column.isSorted
-                          ? column.isSortedDesc
-                            ? ' 🔽'
-                            : ' 🔼'
-                          : ''}
+                        {column.isSorted ? (
+                          column.isSortedDesc ? (
+                            <img src={up} alt="up" />
+                          ) : (
+                            <img src={down} alt="down" />
+                          )
+                        ) : (
+                          ''
+                        )}
                       </span>
                     </th>
                   ))}
