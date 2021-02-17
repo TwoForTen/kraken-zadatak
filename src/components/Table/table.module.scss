@@ -1,3 +1,9 @@
+@mixin pagination-style() {
+  padding: 0.5rem 0.75rem;
+  border: 2px solid #4267b2;
+  border-radius: 0.5rem;
+}
+
 table {
   width: 100%;
   overflow: scroll;
@@ -28,16 +34,57 @@ table {
     tr {
       border-bottom: 1px solid #ededed;
 
+      &:hover {
+        background-color: #ededed;
+        cursor: pointer;
+      }
+
       td {
         padding: 1rem 0.75rem;
         color: #555;
         font-size: 0.9rem;
       }
     }
+  }
+}
 
-    tr:hover {
-      background-color: #ededed;
-      cursor: pointer;
+.pagination {
+  margin-top: 1rem;
+
+  > *:not(:last-child) {
+    margin-right: 0.5rem;
+  }
+
+  button {
+    background-color: #4267b2;
+    cursor: pointer;
+    transition: 150ms;
+    color: #fff;
+
+    @include pagination-style();
+
+    &:hover {
+      background-color: transparent;
+      color: #555;
+    }
+
+    &:disabled {
+      border: 2px solid #555;
+      cursor: default;
+      background-color: transparent;
+      color: #555;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  select {
+    @include pagination-style();
+
+    &:focus {
+      outline: none;
     }
   }
 }

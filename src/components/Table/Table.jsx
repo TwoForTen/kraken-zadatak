@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useTable, usePagination } from 'react-table';
 import { useSelector, useDispatch } from 'react-redux';
-import './table.module.scss';
+import styles from './table.module.scss';
 
 import { openModal } from '../../store/Modal/actions';
 
@@ -50,8 +50,6 @@ const Table = () => {
     page,
     canPreviousPage,
     canNextPage,
-    pageOptions,
-    pageCount,
     gotoPage,
     nextPage,
     previousPage,
@@ -89,25 +87,17 @@ const Table = () => {
           })}
         </tbody>
       </table>
-      <div className="pagination">
+      <div className={styles.pagination}>
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<<'}
-        </button>{' '}
+        </button>
         <button onClick={() => previousPage()} disabled={!canPreviousPage}>
           {'<'}
-        </button>{' '}
+        </button>
+        <span>Page {pageIndex + 1}</span>
         <button onClick={() => nextPage()} disabled={!canNextPage}>
           {'>'}
-        </button>{' '}
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {'>>'}
-        </button>{' '}
-        <span>
-          Page{' '}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>{' '}
-        </span>{' '}
+        </button>
         <select
           value={pageSize}
           onChange={(e) => {
