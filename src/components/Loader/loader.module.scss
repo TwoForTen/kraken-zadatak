@@ -1,0 +1,29 @@
+@import '../../styles/global.scss';
+
+@keyframes loading {
+  from {
+    transform: translateX(-100vw);
+  }
+  to {
+    transform: translateX(100vw);
+  }
+}
+
+.root {
+  position: absolute;
+  top: $header-height;
+  left: 0;
+  width: 100%;
+  height: 0.25rem;
+  background-color: rgba(#4267b2, 0.4);
+  overflow: hidden;
+
+  .loader {
+    width: 90%;
+    height: 100%;
+    background-color: #4267b2;
+    transition: all 2s ease-in-out;
+    animation: loading 2s infinite;
+    z-index: 100;
+  }
+}
