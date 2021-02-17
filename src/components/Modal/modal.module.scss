@@ -1,10 +1,12 @@
+@import '../../styles/global.scss';
+
 .backdrop {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba($color: #000000, $alpha: 0.75);
+  background-color: rgba(#000000, 0.75);
   z-index: 1001;
   display: flex;
   align-items: center;
@@ -31,7 +33,7 @@
       .img_placeholder {
         height: 128px;
         width: 128px;
-        background-color: #999;
+        background-color: theme(lightgray);
         border-radius: 100%;
         margin-bottom: 1rem;
       }
@@ -46,7 +48,7 @@
       margin: 1rem 0;
 
       small {
-        color: #777;
+        color: theme(text);
       }
 
       span {

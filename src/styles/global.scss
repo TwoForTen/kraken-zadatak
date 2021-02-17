@@ -14,6 +14,21 @@ $breakpoints: (
   }
 }
 
+$theme: (
+  primary: #4267b2,
+  text: #555,
+  lightgray: #ededed,
+);
+
+@function theme($key) {
+  @if map-has-key($theme, $key) {
+    @return map-get($theme, $key);
+  }
+
+  @warn "Unknown `#{$key}` in $theme.";
+  @return null;
+}
+
 $header-height: 60px;
 
 *,
