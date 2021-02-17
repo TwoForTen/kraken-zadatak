@@ -23,6 +23,7 @@ const Table = () => {
   } = useTable({ columns, data }, useSortBy);
 
   useEffect(() => {
+    window.scrollTo({ top: 0 });
     dispatch(fetchUsers(page, results));
   }, [page, results, dispatch]);
 
